@@ -1,22 +1,22 @@
 const { merge } = require('webpack-merge')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
-const packageJson = require('../package-lock')
+const packageJson = require('../package.json')
 const commonConfig = require('./webpack.common')
 
 const prodConfig = {
   mode: 'production',
   output: {
     filename: '[name].[contenthash].js',
-    publicPath: '/marketing/latest/'
+    publicPath: '/marketing/latest/',
   },
   plugins: [
     new ModuleFederationPlugin({
       name: 'marketing',
-      filename: 'removeEntry.js',
+      filename: 'remoteEntry.js',
       exposes: {
         './MarketingApp': './src/bootstrap',
       },
-      shared: packageJson.depenndencies,
+      shared: packageJson.dependencies,
     }),
   ],
 }
